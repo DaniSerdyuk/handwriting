@@ -1,16 +1,22 @@
-from PIL import Image, ImageDraw
 import os
+import random
+from PIL import Image, ImageDraw, ImageFont
 
 class ImageRenderer:
-    def __init__(self, text_blocks, formatter, font, config):
+    def __init__(self, text_blocks, formatter, config):
         self.text_blocks = text_blocks
         self.formatter = formatter
-        self.font = font
         self.config = config
         self.block_index = 0
         self.output_index = 1
 
         os.makedirs(config['output_dir'], exist_ok=True)
+
+        # Загружаем шрифты
+        self.fonts = [
+            ImageFont.truetype(font_path, self.config['font_size'])
+            for font_path in self.config['font_paths']
+        ]
 
     def render_images(self):
         image_dir = self.config.get('image_dir', '.')
@@ -47,7 +53,8 @@ class ImageRenderer:
                     self.block_index += 1
                     continue
 
-                fitted = self.formatter.fit_words(current_block, max_width)
+                base_font = self.fonts[0]
+                fitted = self.formatter.fit_words(current_block, base_font, max_width)
 
                 if not fitted:
                     print(f"⛔ Line {i+1}/{total_lines} | y={int(y)} | ❗ Word too long: \"{current_block[0]}\"")
@@ -56,8 +63,13 @@ class ImageRenderer:
 
                 draw_x = x
                 for word in fitted:
-                    draw.text((draw_x, y), word, font=self.font, fill=self.config['ink_color'])
-                    draw_x += self.font.getlength(word) + self.config['word_spacing']
+                    for char in word:
+                        font = random.choice(self.fonts)
+                        offset_x = random.uniform(-0.5, 0.5)
+                        offset_y = random.uniform(-1, 1)
+                        draw.text((draw_x + offset_x, y + offset_y), char, font=font, fill=self.config['ink_color'])
+                        draw_x += font.getlength(char)
+                    draw_x += self.config['word_spacing']
 
                 self.text_blocks[self.block_index] = current_block[len(fitted):]
 

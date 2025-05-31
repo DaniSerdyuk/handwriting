@@ -5,7 +5,11 @@ from image_renderer import ImageRenderer
 
 if __name__ == "__main__":
     CONFIG = {
-        'font_path': "fonts/Rozovii_Chulok.ttf",
+        'font_paths': [
+            # "fonts/Rozovii_Chulok.ttf",
+            # "fonts/BetinaScriptCTT.ttf",
+            "fonts/Peach Cream.ttf",
+        ],
         'font_size': 28,
         'text_file': "text.txt",
         'ink_color': (26, 42, 94),
@@ -15,10 +19,10 @@ if __name__ == "__main__":
         "image_dir": "images",
     }
 
-    font = ImageFont.truetype(CONFIG['font_path'], CONFIG['font_size'])
+    font = ImageFont.truetype(CONFIG['font_paths'][0], CONFIG['font_size'])
     reader = TextReader(CONFIG['text_file'])
     blocks = reader.read_blocks()
 
-    formatter = TextFormatter(font, CONFIG['word_spacing'])
-    renderer = ImageRenderer(blocks, formatter, font, CONFIG)
+    formatter = TextFormatter(CONFIG['word_spacing'])
+    renderer = ImageRenderer(blocks, formatter, CONFIG)
     renderer.render_images()
