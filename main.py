@@ -6,9 +6,12 @@ from image_renderer import ImageRenderer
 if __name__ == "__main__":
     CONFIG = {
         'font_paths': [
-            # "fonts/Rozovii_Chulok.ttf",
+            "fonts/Rozovii_Chulok.ttf",
             # "fonts/BetinaScriptCTT.ttf",
-            "fonts/Peach Cream.ttf",
+            # "fonts/Peach Cream.ttf",
+            # "fonts/mr_GuardianCircusG.otf",
+            # "fonts/Alistair Signature.ttf",
+            "fonts/rabbits-elf.ttf",
         ],
         'font_size': 28,
         'text_file': "text.txt",

@@ -12,7 +12,6 @@ class ImageRenderer:
 
         os.makedirs(config['output_dir'], exist_ok=True)
 
-        # Загружаем шрифты
         self.fonts = [
             ImageFont.truetype(font_path, self.config['font_size'])
             for font_path in self.config['font_paths']
