@@ -1,3 +1,4 @@
-results/
-.idea/
-.git/
+.idea
+.git
+results/*
+images/*
